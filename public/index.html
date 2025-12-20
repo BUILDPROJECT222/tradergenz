@@ -1,18 +1,78 @@
 <!DOCTYPE html>
 <html lang="">
   <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale=1.0">
-    <link rel="icon" href="<%= BASE_URL %>favicon.ico">
-    <title><%= htmlWebpackPlugin.options.title %></title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
-    <!-- <link rel="stylesheet" href="../assets/css/style.css"> -->
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width,initial-scale=1.0" />
 
+    <!-- Favicon with cache busting -->
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="<%= BASE_URL %>favicon.ico?v=2"
+    />
+    <link
+      rel="shortcut icon"
+      type="image/x-icon"
+      href="<%= BASE_URL %>favicon.ico?v=2"
+    />
+    <link rel="apple-touch-icon" href="<%= BASE_URL %>favicon.ico?v=2" />
+
+    <!-- Primary Meta Tags -->
+    <title>Trader Gen-Z - Program Rebate Exness Terpercaya</title>
+    <meta
+      name="title"
+      content="Trader Gen-Z - Program Rebate Exness Terpercaya"
+    />
+    <meta
+      name="description"
+      content="Bergabunglah dengan Team Trader Gen-Z, penyedia rebate resmi Exness. Dapatkan rebate dari setiap transaksi trading Anda."
+    />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://tradergenz.vercel.app/" />
+    <meta
+      property="og:title"
+      content="Trader Gen-Z - Program Rebate Exness Terpercaya"
+    />
+    <meta
+      property="og:description"
+      content="Bergabunglah dengan Team Trader Gen-Z, penyedia rebate resmi Exness. Dapatkan rebate dari setiap transaksi trading Anda."
+    />
+    <meta
+      property="og:image"
+      content="https://i.ibb.co.com/23P7rsq7/Screenshot-2025-12-19-231201.png"
+    />
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content="https://tradergenz.vercel.app/" />
+    <meta
+      property="twitter:title"
+      content="Trader Gen-Z - Program Rebate Exness Terpercaya"
+    />
+    <meta
+      property="twitter:description"
+      content="Bergabunglah dengan Team Trader Gen-Z, penyedia rebate resmi Exness. Dapatkan rebate dari setiap transaksi trading Anda."
+    />
+    <meta
+      property="twitter:image"
+      content="https://i.ibb.co.com/23P7rsq7/Screenshot-2025-12-19-231201.png"
+    />
+
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap"
+      rel="stylesheet"
+    />
   </head>
   <body>
     <noscript>
-      <strong>We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work properly without JavaScript enabled. Please enable it to continue.</strong>
+      <strong
+        >We're sorry but <%= htmlWebpackPlugin.options.title %> doesn't work
+        properly without JavaScript enabled. Please enable it to
+        continue.</strong
+      >
     </noscript>
     <div id="app"></div>
     <!-- built files will be auto injected -->
