@@ -28,6 +28,15 @@
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
           <!-- Calendar -->
           <div class="lg:col-span-2 bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6">
+            <!-- Info Text -->
+            <div class="mb-4 p-3 bg-blue-500/10 border border-blue-500/30 rounded-lg">
+              <p class="text-sm text-blue-300 text-center">
+                <svg class="w-4 h-4 inline-block mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15l-2 5L9 9l11 4-5 2zm0 0l5 5M7.188 2.239l.777 2.897M5.596 9.7l2.714-.902M12.003 5.688l2.99 2.99M15.302 7.302l1.093 3.839M17.001 13.999l-3.84-1.092M19.761 16.812l-2.897-.777M12.002 19.002l-2.99-2.99M8.698 16.698l-1.093-3.839M6.999 10.001l3.84 1.092M4.239 7.188l2.897.777M11.998 4.998l2.99 2.99" />
+                </svg>
+                Klik tanggal untuk melihat history trade
+              </p>
+            </div>
             <!-- Days of Week Header -->
             <div class="grid grid-cols-7 gap-2 mb-4">
               <div v-for="day in daysOfWeek" :key="day" class="text-center text-sm font-semibold text-gray-400 py-2">
@@ -53,31 +62,34 @@
                     'border-slate-700 bg-slate-700/30',
                   selectedDay === day ? 'ring-2 ring-amber-400' : ''
                 ]">
-                <div class="flex flex-col h-full justify-between">
-                  <div :class="['text-sm md:text-base font-bold', isToday(day) ? 'text-white' : 'text-gray-300']">
+                <div class="flex flex-col h-full relative overflow-hidden">
+                  <!-- Date Number - Top Left -->
+                  <div :class="['text-xs md:text-sm font-bold absolute top-0 left-1', isToday(day) ? 'text-white' : 'text-gray-300']">
                     {{ day }}
                   </div>
-                  <div v-if="hasTradingData(day)" class="mt-auto space-y-0.5">
-                    <div class="flex items-center justify-center gap-1">
-                      <span class="text-[10px] md:text-xs font-semibold text-white">{{ getDayTradesCount(day) }}</span>
+                  
+                  <!-- Trading Data - Bottom Center -->
+                  <div v-if="hasTradingData(day)" class="absolute bottom-0 left-0 right-0 flex flex-col items-center justify-end pb-0.5">
+                    <div class="flex items-center justify-center gap-0.5 mb-0.5">
+                      <span class="text-[9px] md:text-[10px] font-semibold text-white">{{ getDayTradesCount(day) }}</span>
                       <svg 
                         v-if="getDayProfit(day) >= 0"
-                        class="w-2.5 h-2.5 md:w-3 md:h-3 text-green-400" 
+                        class="w-2 h-2 md:w-2.5 md:h-2.5 text-green-400" 
                         fill="currentColor" 
                         viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                       </svg>
                       <svg 
                         v-else
-                        class="w-2.5 h-2.5 md:w-3 md:h-3 text-red-400" 
+                        class="w-2 h-2 md:w-2.5 md:h-2.5 text-red-400" 
                         fill="currentColor" 
                         viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                       </svg>
                     </div>
-                    <div :class="['text-[9px] md:text-xs font-bold leading-tight text-center break-words', getDayProfit(day) >= 0 ? 'text-green-400' : 'text-red-400']">
-                      <span class="block">{{ getDayProfit(day) >= 0 ? '+' : '' }}{{ getDayProfit(day).toLocaleString() }}</span>
-                      <span class="block text-[8px] md:text-[10px] opacity-90">PIPS</span>
+                    <div :class="['text-[8px] md:text-[9px] font-bold leading-none text-center', getDayProfit(day) >= 0 ? 'text-green-400' : 'text-red-400']">
+                      <div class="whitespace-nowrap">{{ getDayProfit(day) >= 0 ? '+' : '' }}{{ getDayProfit(day).toLocaleString() }}</div>
+                      <div class="text-[7px] md:text-[8px] opacity-90">PIPS</div>
                     </div>
                   </div>
                 </div>
