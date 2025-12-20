@@ -125,11 +125,6 @@ export default {
           icon: '⚡',
           title: 'Pembayaran Cepat',
           description: 'Rebate dibayarkan secara berkala (mingguan/bulanan) dengan proses yang cepat dan transparan melalui berbagai metode pembayaran.'
-        },
-        {
-          icon: '🛡️',
-          title: 'Aman & Terpercaya',
-          description: 'Platform terpercaya dengan sistem yang aman dan transparan. Data Anda terlindungi dan rebate dijamin dibayarkan tepat waktu.'
         }
       ]
     };
