@@ -46,37 +46,38 @@
                 :key="day"
                 @click="selectDay(day)"
                 :class="[
-                  'aspect-square rounded-lg border-2 p-2 cursor-pointer transition-all hover:scale-105',
+                  'aspect-square rounded-lg border-2 p-1 md:p-2 cursor-pointer transition-all hover:scale-105',
                   isToday(day) ? 'border-blue-500 bg-blue-500/20' : 
                   hasTradingData(day) ? 
                     (getDayProfit(day) >= 0 ? 'border-green-500 bg-green-500/20' : 'border-red-500 bg-red-500/20') :
                     'border-slate-700 bg-slate-700/30',
                   selectedDay === day ? 'ring-2 ring-amber-400' : ''
                 ]">
-                <div class="flex flex-col h-full">
-                  <div :class="['text-sm font-bold', isToday(day) ? 'text-white' : 'text-gray-300']">
+                <div class="flex flex-col h-full justify-between">
+                  <div :class="['text-sm md:text-base font-bold', isToday(day) ? 'text-white' : 'text-gray-300']">
                     {{ day }}
                   </div>
-                  <div v-if="hasTradingData(day)" class="mt-auto">
-                    <div class="flex items-center gap-1 mb-1">
-                      <span class="text-xs font-semibold text-white">{{ getDayTradesCount(day) }}</span>
+                  <div v-if="hasTradingData(day)" class="mt-auto space-y-0.5">
+                    <div class="flex items-center justify-center gap-1">
+                      <span class="text-[10px] md:text-xs font-semibold text-white">{{ getDayTradesCount(day) }}</span>
                       <svg 
                         v-if="getDayProfit(day) >= 0"
-                        class="w-3 h-3 text-green-400" 
+                        class="w-2.5 h-2.5 md:w-3 md:h-3 text-green-400" 
                         fill="currentColor" 
                         viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M5.293 9.707a1 1 0 010-1.414l4-4a1 1 0 011.414 0l4 4a1 1 0 01-1.414 1.414L11 7.414V15a1 1 0 11-2 0V7.414L6.707 9.707a1 1 0 01-1.414 0z" clip-rule="evenodd" />
                       </svg>
                       <svg 
                         v-else
-                        class="w-3 h-3 text-red-400" 
+                        class="w-2.5 h-2.5 md:w-3 md:h-3 text-red-400" 
                         fill="currentColor" 
                         viewBox="0 0 20 20">
                         <path fill-rule="evenodd" d="M14.707 10.293a1 1 0 010 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 111.414-1.414L9 12.586V5a1 1 0 012 0v7.586l2.293-2.293a1 1 0 011.414 0z" clip-rule="evenodd" />
                       </svg>
                     </div>
-                    <div :class="['text-xs font-semibold', getDayProfit(day) >= 0 ? 'text-green-400' : 'text-red-400']">
-                      {{ getDayProfit(day) >= 0 ? '+' : '' }}{{ getDayProfit(day).toLocaleString() }} PIPS
+                    <div :class="['text-[9px] md:text-xs font-bold leading-tight text-center break-words', getDayProfit(day) >= 0 ? 'text-green-400' : 'text-red-400']">
+                      <span class="block">{{ getDayProfit(day) >= 0 ? '+' : '' }}{{ getDayProfit(day).toLocaleString() }}</span>
+                      <span class="block text-[8px] md:text-[10px] opacity-90">PIPS</span>
                     </div>
                   </div>
                 </div>

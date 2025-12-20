@@ -109,7 +109,7 @@ export default {
         {
           icon: '📊',
           title: 'Signal Trading Berkualitas',
-          description: 'Akses ke signal trading yang telah teruji dan dikurasi oleh trader berpengalaman untuk membantu keputusan trading Anda.'
+          description: 'Akses ke signal trading yang telah teruji dan diakurasi oleh trader berpengalaman untuk membantu keputusan trading Anda.'
         },
         {
           icon: '🎓',

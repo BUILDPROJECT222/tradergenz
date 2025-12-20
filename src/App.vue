@@ -29,16 +29,15 @@
       </div>
     </nav>
 
-    <div class="md:mt-[100px]">
+    <div class="md:mt-[100px] pb-20 md:pb-0">
       <router-view />
     </div>
   </div>
-  <footer class="block md:hidden fixed bottom-0 left-0 right-0 rounded-t-3xl border border-[#383838] bg-[#121212] bg-opacity-80 backdrop-blur-md backdrop-opacity-90">
+  <footer class="block md:hidden fixed bottom-0 left-0 right-0 rounded-t-3xl border border-[#383838] bg-[#121212] bg-opacity-95 backdrop-blur-md backdrop-opacity-90 z-[9999] pointer-events-auto">
   <nav class="flex justify-around py-4 text-xs">
-    <router-link to="/" class="text-gray-300 hover:text-white">Home</router-link>
-    <router-link to="/tutorial" class="text-gray-300 hover:text-white">Tutorial</router-link>
-    <router-link to="/calendar" class="text-gray-300 hover:text-white">Calendar</router-link>
-    <router-link to="/blog" class="text-gray-300 hover:text-white">Blog</router-link>
+    <router-link to="/" class="text-gray-300 hover:text-white transition-colors px-2 py-1 rounded active:text-amber-400 pointer-events-auto touch-manipulation">Home</router-link>
+    <router-link to="/tutorial" class="text-gray-300 hover:text-white transition-colors px-2 py-1 rounded active:text-amber-400 pointer-events-auto touch-manipulation">Tutorial</router-link>
+    <router-link to="/calendar" class="text-gray-300 hover:text-white transition-colors px-2 py-1 rounded active:text-amber-400 pointer-events-auto touch-manipulation">Calendar</router-link>
   </nav>
 </footer>
 </template>
@@ -120,6 +119,31 @@ nav a.router-link-exact-active:hover {
   color: white;
 }
 
+/* Footer navigation specific styles */
+footer nav a {
+  position: relative;
+  z-index: 10000;
+  -webkit-tap-highlight-color: rgba(255, 219, 112, 0.3);
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+footer nav a.router-link-exact-active {
+  color: #ffdb70;
+}
+
+footer nav a.router-link-exact-active::after {
+  position: absolute;
+  bottom: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60%;
+  height: 3px;
+  background-color: #ffdb70;
+  border-radius: 2px;
+}
 
 @keyframes fadeInLeft {
   0% {
