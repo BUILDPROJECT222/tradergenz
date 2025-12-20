@@ -19,6 +19,10 @@
               <router-link to="/tutorial"
                 class="fadein-bot fadein-1 text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-gray-500 md:p-0">Tutorial</router-link>
             </li>
+            <li>
+              <router-link to="/calendar"
+                class="fadein-bot fadein-2 text-gray-700 hover:bg-gray-50 border-b border-gray-100 md:hover:bg-transparent md:border-0 block pl-3 pr-4 py-2 md:hover:text-gray-500 md:p-0">Calendar</router-link>
+            </li>
           </ul>
         </div>
       </div>
@@ -32,6 +36,7 @@
   <nav class="flex justify-around py-4 text-xs">
     <router-link to="/" class="text-gray-300 hover:text-white">Home</router-link>
     <router-link to="/tutorial" class="text-gray-300 hover:text-white">Tutorial</router-link>
+    <router-link to="/calendar" class="text-gray-300 hover:text-white">Calendar</router-link>
     <router-link to="/blog" class="text-gray-300 hover:text-white">Blog</router-link>
   </nav>
 </footer>

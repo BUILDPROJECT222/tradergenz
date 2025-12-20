@@ -15,6 +15,12 @@ const routes = [
     meta: { title: 'Tutorial' }
   },
   {
+    path: '/calendar',
+    name: 'calendar',
+    component: () => import('../views/CalendarView.vue'),
+    meta: { title: 'Daily Summary' }
+  },
+  {
     path: '/rebate-article',
     name: 'rebateArticle',
     component: () => import('../views/RebateArticleView.vue'),
