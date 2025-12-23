@@ -5,7 +5,7 @@
 
     <nav class="max-w-7xl px-5 md:fixed top-0 z-[98] w-screen backdrop-blur-md bg-[#121212] bg-opacity-80">
       <div class="container mx-auto flex flex-wrap items-center justify-between">
-        <button @click="redirectToHome" class="flex items-center gap-2">
+        <button @click="handleLogoClick" class="flex items-center gap-2">
           <img src="https://i.ibb.co.com/23P7rsq7/Screenshot-2025-12-19-231201.png" alt="Tradergenz Logo" class="h-10 w-10 rounded-full border-2 border-amber-200 fadein-bot">
           <span class="self-center text-lg text-[#ffdb70] font-semibold whitespace-nowrap fadein-bot hover:text-amber-100">Tradergenz</span>
         </button>
@@ -44,12 +44,72 @@
 
 <script>
 export default {
+  data() {
+    return {
+      clickCount: 0,
+      clickTimer: null,
+    };
+  },
   methods: {
     redirectToHome() {
-      this.$router.push('/')
+      this.$router.push("/");
+    },
+    handleLogoClick() {
+      this.clickCount++;
+
+      // Clear existing timer
+      if (this.clickTimer) {
+        clearTimeout(this.clickTimer);
+      }
+
+      // If triple click detected
+      if (this.clickCount === 3) {
+        // Check if already authenticated
+        const isAuthenticated = localStorage.getItem('adminAuthenticated');
+        if (isAuthenticated === 'true') {
+          this.$router.push("/admin");
+        } else {
+          this.$router.push("/admin-login");
+        }
+        this.clickCount = 0;
+        return;
+      }
+
+      // Reset click count after 2 seconds
+      this.clickTimer = setTimeout(() => {
+        if (this.clickCount < 3) {
+          this.redirectToHome();
+        }
+        this.clickCount = 0;
+      }, 2000);
+    },
+    handleKeyPress(event) {
+      // Check for Ctrl+Shift+A (Windows/Linux) or Cmd+Shift+A (Mac)
+      if ((event.ctrlKey || event.metaKey) && event.shiftKey && event.key === "A") {
+        event.preventDefault();
+        
+        // Check if already authenticated
+        const isAuthenticated = localStorage.getItem('adminAuthenticated');
+        if (isAuthenticated === 'true') {
+          this.$router.push("/admin");
+        } else {
+          this.$router.push("/admin-login");
+        }
+      }
+    },
+  },
+  mounted() {
+    // Add keyboard listener
+    window.addEventListener("keydown", this.handleKeyPress);
+  },
+  beforeUnmount() {
+    // Remove keyboard listener
+    window.removeEventListener("keydown", this.handleKeyPress);
+    if (this.clickTimer) {
+      clearTimeout(this.clickTimer);
     }
   },
-}
+};
 </script>
 
 <style>

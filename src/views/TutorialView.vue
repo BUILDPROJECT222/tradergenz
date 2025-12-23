@@ -22,7 +22,7 @@
       <div
         class="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8 max-w-7xl mx-auto"
       >
-        <!-- Section 1: Daftar Exness -->
+        <!-- Section 1: Daftar VIP -->
         <div
           class="bg-slate-800/50 backdrop-blur-sm rounded-2xl border border-slate-700/50 p-6 md:p-8 flex flex-col overflow-hidden hover:border-blue-500/50 transition-all duration-300"
         >
@@ -33,46 +33,79 @@
             <h2
               class="text-2xl md:text-3xl font-bold text-white text-center drop-shadow-lg"
             >
-              ✨ Daftar Exness
+              ✨ Daftar VIP
             </h2>
           </div>
 
-          <div
-            class="flex-1 flex flex-col items-center justify-center space-y-6"
-          >
-            <h3
-              class="text-lg md:text-xl font-semibold text-blue-300 text-center"
-            >
-              Daftar Exness melalui link ini
-            </h3>
-
-            <div class="w-full">
-              <code
-                class="block bg-slate-700/50 px-4 py-3 rounded-lg text-blue-300 text-xs md:text-sm break-all text-center border border-blue-500/30"
+          <div class="flex-1 flex flex-col space-y-6">
+            <!-- Broker Selection Tabs -->
+            <div class="flex gap-2 bg-slate-700/30 p-2 rounded-lg">
+              <button
+                v-for="broker in brokerOptions"
+                :key="broker.name"
+                @click="selectedBroker = broker.name"
+                :class="[
+                  'flex-1 py-3 px-4 rounded-lg font-semibold text-sm transition-all duration-300',
+                  selectedBroker === broker.name
+                    ? 'bg-gradient-to-r from-blue-600 to-purple-600 text-white shadow-lg'
+                    : 'bg-slate-700/50 text-gray-400 hover:text-white hover:bg-slate-600/50'
+                ]"
               >
-                https://one.exnessonelink.com/a/tn2bqeplq9
-              </code>
+                {{ broker.name }}
+              </button>
             </div>
 
-            <a
-              href="https://one.exnessonelink.com/a/tn2bqeplq9"
-              target="_blank"
-              rel="noopener noreferrer"
-              class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-500/50 text-center"
-            >
-              🚀 DAFTAR SEKARANG
-            </a>
+            <!-- Dynamic Content Based on Selected Broker -->
+            <div class="space-y-6">
+              <h3
+                class="text-lg md:text-xl font-semibold text-blue-300 text-center"
+              >
+                Daftar {{ selectedBroker }} melalui link VIP kami
+              </h3>
 
-            <div
-              class="bg-red-500/20 border-2 border-red-500/50 rounded-lg p-4 w-full"
-            >
-              <p class="font-bold text-red-300 text-sm mb-2 text-center">
-                ⚠️ PENTING:
-              </p>
-              <p class="text-white text-xs md:text-sm text-center">
-                WAJIB MASUKAN PARTNER CODE:
-                <strong class="text-red-300">tn2bqeplq9</strong>
-              </p>
+              <div class="w-full">
+                <code
+                  class="block bg-slate-700/50 px-4 py-3 rounded-lg text-blue-300 text-xs md:text-sm break-all text-center border border-blue-500/30"
+                >
+                  {{ getCurrentBrokerLink() }}
+                </code>
+              </div>
+
+              <a
+                :href="getCurrentBrokerLink()"
+                target="_blank"
+                rel="noopener noreferrer"
+                class="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white font-bold py-4 px-6 rounded-lg transition-all transform hover:scale-105 shadow-lg hover:shadow-blue-500/50 text-center block"
+              >
+                🚀 DAFTAR {{ selectedBroker.toUpperCase() }} SEKARANG
+              </a>
+
+              <!-- Partner Code Warning (Only for Exness) -->
+              <div
+                v-if="selectedBroker === 'Exness'"
+                class="bg-red-500/20 border-2 border-red-500/50 rounded-lg p-4 w-full"
+              >
+                <p class="font-bold text-red-300 text-sm mb-2 text-center">
+                  ⚠️ PENTING:
+                </p>
+                <p class="text-white text-xs md:text-sm text-center">
+                  WAJIB MASUKAN PARTNER CODE:
+                  <strong class="text-red-300">tn2bqeplq9</strong>
+                </p>
+              </div>
+
+              <!-- Info for HFM/Valetax -->
+              <div
+                v-else
+                class="bg-green-500/20 border-2 border-green-500/50 rounded-lg p-4 w-full"
+              >
+                <p class="font-bold text-green-300 text-sm mb-2 text-center">
+                  ✅ INFO:
+                </p>
+                <p class="text-white text-xs md:text-sm text-center">
+                  Link pendaftaran sudah include partner code kami
+                </p>
+              </div>
             </div>
           </div>
         </div>
@@ -188,18 +221,20 @@
                   required
                 >
                   <option value="Exness">Exness</option>
+                  <option value="HFM">HFM</option>
+                  <option value="Valetax">Valetax</option>
                 </select>
               </div>
 
               <div>
                 <label class="block text-white text-sm font-medium mb-2"
-                  >Nomor Akun Exness</label
+                  >Nomor Akun Trading</label
                 >
                 <input
                   type="text"
                   v-model="formData.accountNumber"
                   class="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-3 text-white text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
-                  placeholder="Masukkan nomor akun Exness"
+                  placeholder="Masukkan nomor akun trading"
                   required
                 />
               </div>
@@ -325,6 +360,21 @@ export default {
   data() {
     return {
       isSubmitting: false,
+      selectedBroker: "Exness",
+      brokerOptions: [
+        {
+          name: "Exness",
+          link: "https://one.exnessonelink.com/a/tn2bqeplq9"
+        },
+        {
+          name: "HFM",
+          link: "https://ma.valetax.com/p/2889954"
+        },
+        {
+          name: "Valetax",
+          link: "https://ma.valetax.com/p/2889954"
+        }
+      ],
       formData: {
         broker: "Exness",
         accountNumber: "",
@@ -341,6 +391,12 @@ export default {
             linkText: "link ini",
             url: "/rebate-article",
           },
+        },
+        {
+          question: "Broker apa saja yang didukung?",
+          answer:
+            "Kami mendukung 3 broker terpercaya: Exness, HFM, dan Valetax. Anda dapat memilih broker sesuai preferensi saat mendaftar program rebate. Pastikan untuk mendaftar melalui link VIP yang disediakan TraderGenz agar mendapatkan rebate.",
+          isOpen: false,
         },
         {
           question: "Saya ingin dapat rebate tapi sudah punya akun",
@@ -382,12 +438,33 @@ export default {
       try {
         this.isSubmitting = true;
 
+        // Save to localStorage
+        const registrationData = {
+          broker: this.formData.broker,
+          accountNumber: this.formData.accountNumber,
+          telegramUsername: this.formData.telegramUsername,
+          timestamp: new Date().toISOString(),
+        };
+
+        // Get existing registrations
+        const existingData = localStorage.getItem("rebateRegistrations");
+        const registrations = existingData ? JSON.parse(existingData) : [];
+
+        // Add new registration
+        registrations.push(registrationData);
+
+        // Save back to localStorage
+        localStorage.setItem(
+          "rebateRegistrations",
+          JSON.stringify(registrations)
+        );
+
         // Format email body
         const emailBody = `
 Pendaftaran Rebate Baru
 
 Broker: ${this.formData.broker}
-Nomor Akun Exness: ${this.formData.accountNumber}
+Nomor Akun Trading: ${this.formData.accountNumber}
 Username Telegram: ${this.formData.telegramUsername}
 
 Waktu: ${new Date().toLocaleString("id-ID")}
@@ -434,6 +511,13 @@ Waktu: ${new Date().toLocaleString("id-ID")}
     },
     toggleFaq(index) {
       this.faqs[index].isOpen = !this.faqs[index].isOpen;
+    },
+    getCurrentBrokerLink() {
+      if (!this.brokerOptions || !this.selectedBroker) {
+        return "";
+      }
+      const broker = this.brokerOptions.find(b => b.name === this.selectedBroker);
+      return broker ? broker.link : "";
     },
   },
 };
