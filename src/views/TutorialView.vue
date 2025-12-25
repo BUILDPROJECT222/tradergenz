@@ -368,7 +368,7 @@ export default {
         },
         {
           name: "HFM",
-          link: "https://ma.valetax.com/p/2889954"
+          link: "https://www.hfmtrade-ind.com/sv/en/?refid=30479483"
         },
         {
           name: "Valetax",

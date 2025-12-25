@@ -143,6 +143,101 @@
             <div class="text-2xl font-bold text-red-400">{{ biggestLoss }} PIPS</div>
           </div>
         </div>
+
+        <!-- Add New Signal Form -->
+        <div class="bg-slate-800/50 backdrop-blur-sm rounded-xl border border-slate-700/50 p-6 mt-6">
+          <div class="flex items-center justify-between mb-4">
+            <h3 class="text-xl font-bold text-white">➕ Tambah Signal Baru</h3>
+            <button
+              @click="showAddForm = !showAddForm"
+              class="px-3 py-1 bg-blue-600 hover:bg-blue-700 text-white rounded-lg transition-all text-sm font-medium"
+            >
+              {{ showAddForm ? 'Tutup Form' : 'Buka Form' }}
+            </button>
+          </div>
+
+          <div v-if="showAddForm" class="space-y-4">
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+              <!-- Date -->
+              <div>
+                <label class="block text-white text-sm font-medium mb-2">📅 Tanggal</label>
+                <input
+                  type="date"
+                  v-model="newSignal.date"
+                  class="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <!-- Action -->
+              <div>
+                <label class="block text-white text-sm font-medium mb-2">🎯 Action</label>
+                <select
+                  v-model="newSignal.action"
+                  class="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Pilih Action</option>
+                  <option value="BUY">BUY</option>
+                  <option value="SELL">SELL</option>
+                </select>
+              </div>
+
+              <!-- Price -->
+              <div>
+                <label class="block text-white text-sm font-medium mb-2">💰 Price</label>
+                <input
+                  type="text"
+                  v-model="newSignal.price"
+                  placeholder="4.450 atau 4.450 - 4.452"
+                  class="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <!-- Profit/Loss -->
+              <div>
+                <label class="block text-white text-sm font-medium mb-2">📈 Profit/Loss (PIPS)</label>
+                <input
+                  type="number"
+                  v-model.number="newSignal.profit"
+                  placeholder="Contoh: 50 atau -30"
+                  class="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                />
+              </div>
+
+              <!-- Status -->
+              <div>
+                <label class="block text-white text-sm font-medium mb-2">✅ Status</label>
+                <select
+                  v-model="newSignal.status"
+                  class="w-full bg-slate-700/50 border border-slate-600 rounded-lg px-4 py-2 text-white text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
+                >
+                  <option value="">Pilih Status</option>
+                  <option value="win">Win (Profit)</option>
+                  <option value="loss">Loss</option>
+                  <option value="cancel">Cancel</option>
+                  <option value="hold">Hold</option>
+                </select>
+              </div>
+            </div>
+
+            <div class="flex gap-3">
+              <button
+                @click="addSignal"
+                class="px-6 py-2 bg-green-600 hover:bg-green-700 text-white rounded-lg transition-all flex items-center space-x-2 text-sm font-medium"
+              >
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>Tambah Signal</span>
+              </button>
+              <button
+                @click="clearSignalForm"
+                class="px-6 py-2 bg-slate-600 hover:bg-slate-700 text-white rounded-lg transition-all text-sm font-medium"
+              >
+                Reset Form
+              </button>
+            </div>
+          </div>
+        </div>
       </div>
 
       <!-- Modal Popup for Transaction History -->
@@ -253,6 +348,14 @@ export default {
       showModal: false,
       daysOfWeek: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
       tradingData: {},
+      showAddForm: false,
+      newSignal: {
+        date: '',
+        action: '',
+        price: '',
+        profit: 0,
+        status: ''
+      },
       signals: [
         { date: '05/12/25', action: 'BUY', price: '4.181', profit: 1000, status: 'win' },
         { date: '12/12/25', action: 'BUY', price: '4.330', profit: 200, status: 'win' },
@@ -283,7 +386,31 @@ export default {
         { date: '18/12/25', action: 'BUY', price: '4.321', profit: 490, status: 'win' },
         { date: '18/12/25', action: 'SELL', price: '4.370 - 4.369', profit: 130, status: 'win' },
         { date: '19/12/25', action: 'BUY', price: '4.325', profit: 150, status: 'win' },
-        { date: '19/12/25', action: 'BUY', price: '4.325', profit: 50, status: 'win' }
+        { date: '19/12/25', action: 'BUY', price: '4.325', profit: 50, status: 'win' },
+        // Recap 23/12/2025 - WIN: 9, LOSS: 1, PROFIT: 820 PIPS, LOSS: 30 PIPS
+        { date: '23/12/25', action: 'SELL', price: '4.484 - 4.486', profit: 30, status: 'win' },
+        { date: '23/12/25', action: 'SELL', price: '4.489', profit: 50, status: 'win' },
+        { date: '23/12/25', action: 'BUY', price: '4.487', profit: 50, status: 'win' },
+        { date: '23/12/25', action: 'BUY', price: '4.475', profit: 50, status: 'win' },
+        { date: '23/12/25', action: 'SELL', price: '4.475', profit: 230, status: 'win' },
+        { date: '23/12/25', action: 'BUY', price: '4.461', profit: 100, status: 'win' },
+        { date: '23/12/25', action: 'BUY', price: '4.470', profit: -30, status: 'loss' },
+        { date: '23/12/25', action: 'SELL', price: '4.450', profit: 200, status: 'win' },
+        { date: '23/12/25', action: 'SELL', price: '4.450', profit: 100, status: 'win' },
+        { date: '23/12/25', action: 'SELL', price: '4.445', profit: 50, status: 'win' },
+        // Recap 24/12/2025 - WIN: 10, LOSS: 3, PROFIT: 760 PIPS, LOSS: 90 PIPS
+        { date: '24/12/25', action: 'BUY', price: '4.484', profit: 60, status: 'win' },
+        { date: '24/12/25', action: 'BUY', price: '4.481', profit: 80, status: 'win' },
+        { date: '24/12/25', action: 'SELL', price: '4.484', profit: -30, status: 'loss' },
+        { date: '24/12/25', action: 'BUY', price: '4.460', profit: 140, status: 'win' },
+        { date: '24/12/25', action: 'BUY', price: '4.495', profit: -30, status: 'loss' },
+        { date: '24/12/25', action: 'BUY', price: '4.490', profit: -30, status: 'loss' },
+        { date: '24/12/25', action: 'BUY', price: '4.490', profit: 50, status: 'win' },
+        { date: '24/12/25', action: 'SELL', price: '4.996', profit: 50, status: 'win' },
+        { date: '24/12/25', action: 'SELL', price: '4.995', profit: 100, status: 'win' },
+        { date: '24/12/25', action: 'BUY', price: '4.485', profit: 50, status: 'win' },
+        { date: '24/12/25', action: 'SELL', price: '4.489', profit: 80, status: 'win' },
+        { date: '24/12/25', action: 'SELL', price: '4.491', profit: 100, status: 'win' }
       ]
     };
   },
@@ -443,9 +570,123 @@ export default {
       if (signal.status === 'cancel') return 'CANCEL SIGNAL TIDAK TERJEMPUT';
       if (signal.status === 'hold') return 'MASIH HOLD BUY | VALIDATION✅';
       return 'VALIDATION✅';
+    },
+    // Trading Signals Methods
+    saveTradingSignals() {
+      const savedSignals = localStorage.getItem('tradingSignals');
+      let allSignals = [];
+      if (savedSignals) {
+        try {
+          allSignals = JSON.parse(savedSignals);
+        } catch (e) {
+          console.error('Error parsing saved signals:', e);
+        }
+      }
+      localStorage.setItem('tradingSignals', JSON.stringify(allSignals));
+    },
+    addSignal() {
+      // Validation
+      if (!this.newSignal.date) {
+        alert("⚠️ Tanggal harus diisi!");
+        return;
+      }
+      if (!this.newSignal.action) {
+        alert("⚠️ Action (BUY/SELL) harus dipilih!");
+        return;
+      }
+      if (!this.newSignal.price) {
+        alert("⚠️ Price harus diisi!");
+        return;
+      }
+      if (!this.newSignal.status) {
+        alert("⚠️ Status harus dipilih!");
+        return;
+      }
+
+      // Convert date to DD/MM/YY format
+      const dateObj = new Date(this.newSignal.date);
+      const day = String(dateObj.getDate()).padStart(2, '0');
+      const month = String(dateObj.getMonth() + 1).padStart(2, '0');
+      const year = String(dateObj.getFullYear()).slice(-2);
+      const formattedDate = `${day}/${month}/${year}`;
+
+      // Create signal object
+      const signal = {
+        date: formattedDate,
+        action: this.newSignal.action,
+        price: this.newSignal.price,
+        profit: this.newSignal.profit || 0,
+        status: this.newSignal.status
+      };
+
+      // Get current saved signals
+      const savedSignals = localStorage.getItem('tradingSignals');
+      let allSignals = [];
+      if (savedSignals) {
+        try {
+          allSignals = JSON.parse(savedSignals);
+        } catch (e) {
+          console.error('Error parsing saved signals:', e);
+        }
+      }
+
+      // Add new signal
+      allSignals.push(signal);
+      localStorage.setItem('tradingSignals', JSON.stringify(allSignals));
+
+      // Add to current view
+      this.signals.push(signal);
+
+      // Reprocess trading data
+      this.tradingData = {};
+      this.signals.forEach(s => {
+        const dateParts = s.date.split('/');
+        const d = parseInt(dateParts[0]);
+        const m = parseInt(dateParts[1]);
+        
+        if (m === 12) {
+          const dayKey = d.toString();
+          if (!this.tradingData[dayKey]) {
+            this.tradingData[dayKey] = { trades: 0, profit: 0, signals: [] };
+          }
+          this.tradingData[dayKey].trades++;
+          if (s.status !== 'cancel') {
+            this.tradingData[dayKey].profit += s.profit;
+          }
+          this.tradingData[dayKey].signals.push(s);
+        }
+      });
+
+      this.$forceUpdate();
+      
+      alert(`✅ Signal trading berhasil ditambahkan!\n\n📅 Tanggal: ${formattedDate}\n🎯 ${signal.action} ${signal.price}\n💰 ${signal.profit >= 0 ? '+' : ''}${signal.profit} PIPS`);
+      
+      this.clearSignalForm();
+      this.showAddForm = false;
+    },
+    clearSignalForm() {
+      this.newSignal = {
+        date: '',
+        action: '',
+        price: '',
+        profit: 0,
+        status: ''
+      };
     }
   },
   mounted() {
+    // Load dynamic signals from localStorage
+    const savedSignals = localStorage.getItem('tradingSignals');
+    if (savedSignals) {
+      try {
+        const dynamicSignals = JSON.parse(savedSignals);
+        // Merge with hardcoded signals
+        this.signals = [...this.signals, ...dynamicSignals];
+      } catch (e) {
+        console.error('Error loading signals from localStorage:', e);
+      }
+    }
+
     // Process signals to populate tradingData
     this.signals.forEach(signal => {
       const dateParts = signal.date.split('/');
@@ -470,6 +711,11 @@ export default {
     
     // Set reactive
     this.$forceUpdate();
+
+    // Listen for storage changes (when new signals are added from Admin Panel)
+    window.addEventListener('storage', () => {
+      location.reload(); // Reload page to show new signals
+    });
   }
 }
 </script>

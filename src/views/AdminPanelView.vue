@@ -434,7 +434,7 @@ export default {
     return {
       registrations: [],
       searchQuery: "",
-      dateFilter: "all",
+      dateFilter: "all"
     };
   },
   computed: {
@@ -479,7 +479,7 @@ export default {
       return filtered.sort(
         (a, b) => new Date(b.timestamp) - new Date(a.timestamp)
       );
-    },
+    }
   },
   methods: {
     loadRegistrations() {
